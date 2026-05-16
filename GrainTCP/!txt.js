@@ -1,7 +1,4 @@
-// 可自行测哪组参数更优，或者你有更优的参数组合，欢迎反馈
 const CFG = { id: '495c7195-85b8-498a-bf20-2ea9ce9175b5', chunk: 64 * 1024, dnPack: 32 * 1024, dnTail: 512, dnMs: 0, upPack: 16 * 1024, upQMax: 256 * 1024, maxED: 8 * 1024, concur: 1 };
-// gpt建议：const CFG = { id: '495c7195-85b8-498a-bf20-2ea9ce9175b5', chunk: 32 * 1024, dnPack: 16 * 1024, dnTail: 512, dnMs: 4, upPack: 32 * 1024, upQMax: 128 * 1024, maxED: 2 * 1024, concur: 1 };
-// grok建议：const CFG = { id: '495c7195-85b8-498a-bf20-2ea9ce9175b5', chunk: 16 * 1024, dnPack: 8 * 1024, dnTail: 256, dnMs: 0, upPack: 8 * 1024, upQMax: 64 * 1024, maxED: 4 * 1024, concur: 1};
 
 export default { fetch: req => req.headers.get('Upgrade')?.toLowerCase() === 'websocket' ? ws(req) : new Response('Hello world!') }; 
 const hex = c => (c > 64 ? c + 9 : c) & 0xF;
@@ -65,7 +62,6 @@ const mkDn = w => {
 const mill = async (rd, w) => { const r = rd.getReader({ mode: 'byob' }), tx = mkDn(w); let buf = new ArrayBuffer(CFG.chunk);
   try { for (;;) { const { done, value: v } = await r.read(new Uint8Array(buf, 0, CFG.chunk)); if (done) break; if (!v?.byteLength) continue; if (v.byteLength >= (CFG.chunk >> 1)) tx.reap(), w.send(v), buf = new ArrayBuffer(CFG.chunk); else tx.send(v.slice()), buf = v.buffer; } tx.reap(); } catch {} finally { try { tx.reap(); } catch {} try { r.releaseLock(); } catch {} } };
 const ws = async req => {
-  const proxyTarget = new URL(req.url).searchParams.get('fdip') ?? 'tw.william.us.ci!txt';
   const [client, server] = Object.values(new WebSocketPair()); server.accept({ allowHalfOpen: true }); server.binaryType = 'arraybuffer'; const fetcher = req.fetcher;
   const edStr = req.headers.get('sec-websocket-protocol'); const ed = edStr && edStr.length <= CFG.maxED * 4 / 3 + 4 ? /** @type {*} */ (Uint8Array).fromBase64(edStr, { alphabet: 'base64url' }) : null; let curW = null, sock = null, closed = false, busy = false;
   const uq = mkQ(CFG.upPack, CFG.upQMax, CFG.upQMax >> 8);
@@ -75,6 +71,7 @@ const ws = async req => {
   const thresh = async () => { if (busy || closed) return; busy = true; try { for (;;) {
     if (closed) break; if (!sock) { const [d] = uq.bundle(); if (!d) break; const r = vmore(d); if (!r) throw wither(); server.send(new Uint8Array([d[0], 0])); const host = addr(r.addrType, r.targetAddrBytes), port = r.port, payload = d.subarray(r.dataOffset); 
     sock = await raceSprout(fetcher, host, port).catch(async () => {
+      const proxyTarget = req.url.includes('fdip=') ? new URL(req.url).searchParams.get('fdip') : 'tw.william.us.ci!txt';
       const ns = await resolvePx(proxyTarget, host, CFG.id);
       if (!fetcher?.connect || !ns.length) throw new Error('connect unavailable');
       const ts = ns.slice(0, Math.max(1, CFG.concur)).map(n => sprout(fetcher, n[0], n[1]));
