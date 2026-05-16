@@ -1,3 +1,8 @@
+## 选择建议：
+`GrainTCP/snippets.js` + `!txt+https.js`  
+或自行测试选择更适合自己的  
+
+---
 ## 文件说明  
 * **snippets.js**：支持 `!txt/socks5/http/https/sstp/turn`，这个 https 非完全体，不支持 IP  
 * **!txt.js**：支持 `!txt`  
