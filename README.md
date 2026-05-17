@@ -1,8 +1,3 @@
-## 选择建议
-`GrainTCP/snippets.js` + `!txt+https.js`  
-或自行测试选择更适合自己的  
-
----
 ## 文件说明  
 * **snippets.js**：支持 `!txt/socks5/http/https/sstp/turn`，这个 https 非完全体，不支持 IP  
 * **!txt.js**：支持 `!txt`  
@@ -31,6 +26,13 @@ sstp: /?ed=2560&fdip=sstp://host:port
 turn: /?ed=2560&fdip=turn://host:port
 特别地，ss节点路径需加上UUID，如：!txt: /{uuid}?ed=2560&fdip=*.william.us.ci!txt
 ```
+
+---
+## 选择建议
+**全功能：**[GrainTCP/snippets.js](GrainTCP/snippets) + [!txt+https.js](/!txt+https.js)  
+**多功能：**[GrainTCP/snippets.js](GrainTCP/snippets)  
+**单功能：**[GrainTCP/!txt.js](GrainTCP/!txt.js)  
+或自行测试选择更适合自己的  
 
 ---
 ## 特别提醒  
