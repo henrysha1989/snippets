@@ -29,7 +29,7 @@ turn: /?ed=2560&fdip=turn://host:port
 
 ---
 ## 选择建议
-**全功能：**[GrainTCP/snippets.js](GrainTCP/snippets.js) + [!txt+https.js](/!txt+https.js)  
+**全功能：**[GrainTCP/snippets.js](GrainTCP/snippets.js) + [GrainTCP/!txt+https.js](GrainTCP/!txt+https.js)  
 **多功能：**[GrainTCP/snippets.js](GrainTCP/snippets.js)  
 **单功能：**[GrainTCP/!txt.js](GrainTCP/!txt.js)  
 或自行测试选择更适合自己的  
