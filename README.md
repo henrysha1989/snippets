@@ -24,7 +24,7 @@ https 域名: /?ed=2560&fdip=https://domain:port
 https IP: /?ed=2560&fdip=https://ip:port!ip
 sstp: /?ed=2560&fdip=sstp://host:port
 turn: /?ed=2560&fdip=turn://host:port
-特别地，ss节点路径需加上UUID，如：!txt: /{uuid}?ed=2560&fdip=*.william.us.ci!txt
+特别地，ss文件夹的节点路径需加上UUID，如：!txt: /{uuid}?ed=2560&fdip=*.william.us.ci!txt
 ```
 
 ---
