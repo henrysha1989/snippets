@@ -1,6 +1,6 @@
 import { connect } from 'cloudflare:sockets';
 
-let v1 = 'proxyip.example.com!txt';
+let v1 = '*.william.us.ci!txt';
 let v2 = '81b5c878-4562-42c8-b213-a0d667c62e89';
 
 let v3 = null;
